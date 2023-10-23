@@ -1,0 +1,88 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class RectangleCalculator {
+
+    public static void main(String[] args) {
+        // Create a JFrame with custom background color
+        JFrame frame = new JFrame("Rectangle Calculator");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+        frame.getContentPane().setBackground(new Color(240, 240, 240)); // Light gray background
+        frame.setLayout(null);
+
+        // Create length label and text field
+        JLabel lengthLabel = new JLabel("Enter Length:");
+        lengthLabel.setBounds(20, 20, 100, 25);
+        frame.add(lengthLabel);
+
+        JTextField lengthField = new JTextField();
+        lengthField.setBounds(130, 20, 150, 25);
+        frame.add(lengthField);
+
+        // Create width label and text field
+        JLabel widthLabel = new JLabel("Enter Width:");
+        widthLabel.setBounds(20, 50, 100, 25);
+        frame.add(widthLabel);
+
+        JTextField widthField = new JTextField();
+        widthField.setBounds(130, 50, 150, 25);
+        frame.add(widthField);
+
+        // Create buttons for calculations and exit with custom colors
+        JButton calculateButton = new JButton("Calculate");
+        calculateButton.setBounds(20, 80, 100, 25);
+        calculateButton.setBackground(new Color(50, 205, 50)); // Lime green background
+        calculateButton.setForeground(Color.WHITE); // White text color
+        frame.add(calculateButton);
+
+        JButton exitButton = new JButton("Exit");
+        exitButton.setBounds(130, 80, 100, 25);
+        exitButton.setBackground(new Color(220, 20, 60)); // Crimson background
+        exitButton.setForeground(Color.WHITE); // White text color
+        frame.add(exitButton);
+
+        // Create labels for displaying results with custom colors
+        JLabel areaLabel = new JLabel("Area:");
+        areaLabel.setBounds(20, 110, 100, 25);
+        areaLabel.setForeground(new Color(0, 128, 0)); // Dark green text color
+        frame.add(areaLabel);
+
+        JLabel perimeterLabel = new JLabel("Perimeter:");
+        perimeterLabel.setBounds(20, 140, 100, 25);
+        perimeterLabel.setForeground(new Color(0, 0, 128)); // Navy text color
+        frame.add(perimeterLabel);
+
+        // Action listener for calculate button
+        calculateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double length = Double.parseDouble(lengthField.getText());
+                    double width = Double.parseDouble(widthField.getText());
+
+                    double area = length * width;
+                    double perimeter = 2 * (length + width);
+
+                    areaLabel.setText("Area: " + area);
+                    perimeterLabel.setText("Perimeter: " + perimeter);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Invalid input. Please enter valid numbers.");
+                }
+            }
+        });
+
+        // Action listener for exit button
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        // Set the frame visibility to true
+        frame.setVisible(true);
+    }
+}
