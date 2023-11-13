@@ -1,0 +1,108 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SimplePizzaOrderApp extends JFrame {
+    private JComboBox<String> sizeComboBox;
+    private JCheckBox cheeseCheckBox, pepperoniCheckBox, mushroomsCheckBox, olivesCheckBox, peppersCheckBox;
+    private JLabel priceLabel;
+
+    public SimplePizzaOrderApp() {
+        setTitle("Pizza Order App");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setLayout(null); // Using absolute layout for simplicity
+
+        // Size selection
+        JLabel sizeLabel = new JLabel("Select Pizza Size:");
+        sizeLabel.setBounds(10, 10, 120, 20);
+        add(sizeLabel);
+
+        sizeComboBox = new JComboBox<>(new String[]{"Small", "Medium", "Large", "Extra Large"});
+        sizeComboBox.setBounds(140, 10, 100, 20);
+        add(sizeComboBox);
+
+        // Topping selection
+        JLabel toppingLabel = new JLabel("Select Toppings:");
+        toppingLabel.setBounds(10, 40, 120, 20);
+        add(toppingLabel);
+
+        cheeseCheckBox = new JCheckBox("Cheese (Free)");
+        cheeseCheckBox.setBounds(140, 40, 150, 20);
+        add(cheeseCheckBox);
+
+        pepperoniCheckBox = new JCheckBox("Pepperoni (+Php 10)");
+        pepperoniCheckBox.setBounds(140, 60, 150, 20);
+        add(pepperoniCheckBox);
+
+        mushroomsCheckBox = new JCheckBox("Mushrooms (+Php 10)");
+        mushroomsCheckBox.setBounds(140, 80, 150, 20);
+        add(mushroomsCheckBox);
+
+        olivesCheckBox = new JCheckBox("Olives (+Php 10)");
+        olivesCheckBox.setBounds(140, 100, 150, 20);
+        add(olivesCheckBox);
+
+        peppersCheckBox = new JCheckBox("Peppers (+Php 10)");
+        peppersCheckBox.setBounds(140, 120, 150, 20);
+        add(peppersCheckBox);
+
+        // Price display
+        priceLabel = new JLabel("Total Price: ");
+        priceLabel.setBounds(10, 150, 150, 20);
+        add(priceLabel);
+
+        // Order button
+        JButton orderButton = new JButton("Place Order");
+        orderButton.setBounds(10, 180, 120, 30);
+        orderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calculatePrice();
+            }
+        });
+        add(orderButton);
+
+        setVisible(true);
+    }
+
+    private void calculatePrice() {
+        int basePrice;
+        switch (sizeComboBox.getSelectedIndex()) {
+            case 0:
+                basePrice = 300;
+                break;
+            case 1:
+                basePrice = 400;
+                break;
+            case 2:
+                basePrice = 500;
+                break;
+            case 3:
+                basePrice = 600;
+                break;
+            default:
+                basePrice = 0;
+        }
+
+        int toppingsPrice = 0;
+        if (pepperoniCheckBox.isSelected() || mushroomsCheckBox.isSelected()
+                || olivesCheckBox.isSelected() || peppersCheckBox.isSelected()) {
+            toppingsPrice = 10;
+        }
+
+        int total = basePrice + toppingsPrice;
+        priceLabel.setText("Total Price: Php " + total);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new SimplePizzaOrderApp();
+            }
+        });
+    }
+}
