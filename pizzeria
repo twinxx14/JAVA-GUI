@@ -106,3 +106,99 @@ public class SimplePizzaOrderApp extends JFrame {
         });
     }
 }
+
+
+
+6666
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class PizzaOrderApp extends JFrame {
+    private JComboBox<String> sizeComboBox;
+    private JCheckBox cheeseCheckBox, pepperoniCheckBox, mushroomsCheckBox, olivesCheckBox, peppersCheckBox, onionsCheckBox;
+    private JLabel priceLabel;
+
+    public PizzaOrderApp() {
+        setTitle("Pizza Order App");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(7, 1));
+
+        // Size selection
+        sizeComboBox = new JComboBox<>(new String[]{"Small", "Medium", "Large", "Extra Large"});
+        add(new JLabel("Select Pizza Size:"));
+        add(sizeComboBox);
+
+        // Topping selection
+        add(new JLabel("Select Toppings:"));
+        cheeseCheckBox = new JCheckBox("Cheese (Free)");
+        pepperoniCheckBox = new JCheckBox("Pepperoni (+Php 10)");
+        mushroomsCheckBox = new JCheckBox("Mushrooms (+Php 10)");
+        olivesCheckBox = new JCheckBox("Olives (+Php 10)");
+        peppersCheckBox = new JCheckBox("Peppers (+Php 10)");
+        onionsCheckBox = new JCheckBox("Onions (+Php 10)");
+        add(cheeseCheckBox);
+        add(pepperoniCheckBox);
+        add(mushroomsCheckBox);
+        add(olivesCheckBox);
+        add(peppersCheckBox);
+        add(onionsCheckBox);
+
+        // Price display
+        priceLabel = new JLabel("Total Price: ");
+        add(priceLabel);
+
+        // Order button
+        JButton orderButton = new JButton("Place Order");
+        orderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calculatePrice();
+            }
+        });
+        add(orderButton);
+
+        setVisible(true);
+    }
+
+    private void calculatePrice() {
+        int basePrice;
+        switch (sizeComboBox.getSelectedIndex()) {
+            case 0:
+                basePrice = 300;
+                break;
+            case 1:
+                basePrice = 400;
+                break;
+            case 2:
+                basePrice = 500;
+                break;
+            case 3:
+                basePrice = 600;
+                break;
+            default:
+                basePrice = 0;
+        }
+
+        int toppingsPrice = 0;
+        if (pepperoniCheckBox.isSelected() || mushroomsCheckBox.isSelected()
+                || olivesCheckBox.isSelected() || peppersCheckBox.isSelected() || onionsCheckBox.isSelected()) {
+            toppingsPrice = 10;
+        }
+
+        int total = basePrice + toppingsPrice;
+        priceLabel.setText("Total Price: Php " + total);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new PizzaOrderApp();
+            }
+        });
+    }
+}
