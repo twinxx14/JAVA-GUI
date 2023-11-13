@@ -2,57 +2,56 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class LowercaseConverter {
+public class CaseConverter {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Lowercase Converter");
-          
+        JFrame frame = new JFrame("Case Converter");
+
         // FONTS
         Font f = new Font(Font.SERIF, Font.BOLD, 17);
         Font f1 = new Font(Font.DIALOG_INPUT, Font.BOLD, 17);
-        
+
         // COLORS
         Color pastelPink = new Color(255, 183, 197);
         Color mauve = new Color(188, 120, 158);
         Color lavenderBlush = new Color(255, 240, 244);
-        
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(450, 300);
-        //frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        frame.setLayout(new GridLayout(3, 2, 0, 15));
+        frame.setLayout(new GridLayout(4, 1, 0, 15));
         frame.getContentPane().setBackground(lavenderBlush);
         frame.setLocationRelativeTo(null);
-        
+
         JTextField inputField = new JTextField();
         inputField.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         frame.add(inputField);
         inputField.setFont(f1);
         inputField.setBackground(pastelPink);
-        inputField.setHorizontalAlignment(SwingConstants.CENTER); 
-        
-        
+        inputField.setHorizontalAlignment(SwingConstants.CENTER);
+
         JButton convertButton = new JButton("Convert to Lowercase");
         convertButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        frame.add(convertButton);     
+        frame.add(convertButton);
         convertButton.setFocusable(false);
         convertButton.setFont(f);
-        convertButton.setSize(100,100);
         convertButton.setBackground(mauve);
         convertButton.setForeground(Color.WHITE);
 
-        
         JLabel outputLabel = new JLabel();
-        //outputLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         frame.add(outputLabel);
-        outputLabel.setFont(f); 
-        outputLabel.setHorizontalAlignment(SwingConstants.CENTER); 
+        outputLabel.setFont(f);
+        outputLabel.setHorizontalAlignment(SwingConstants.CENTER);
         outputLabel.setVerticalAlignment(SwingConstants.TOP);
 
         convertButton.addActionListener(new ActionListener() {
+            boolean toLowerCase = true;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 String inputText = inputField.getText();
-                String convertedText = inputText.toLowerCase();
+                String convertedText = toLowerCase ? inputText.toLowerCase() : inputText.toUpperCase();
                 outputLabel.setText("Converted Text: " + convertedText);
+                toLowerCase = !toLowerCase; // Toggle between converting to lowercase and uppercase
+                convertButton.setText(toLowerCase ? "Convert to Lowercase" : "Convert to Uppercase");
             }
         });
 
